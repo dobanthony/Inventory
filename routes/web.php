@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleBasedDashboardController;
 use Illuminate\Foundation\Application;
@@ -35,6 +37,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::prefix('admin')->group(function () {
+    Route::get('/shops/{shop}/inventory', [ProductController::class, 'index'])->name('admin.inventory.index');
+    Route::get('/shops/{shop}/inventory/create', [ProductController::class, 'create'])->name('admin.inventory.create');
+
+    Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
+    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
+    Route::put('/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
+    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+});
 
 
 require __DIR__.'/auth.php';
