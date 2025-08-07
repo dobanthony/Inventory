@@ -1,46 +1,40 @@
+<!-- resources/js/Pages/Admin/Inventory/Index.vue -->
 <template>
   <div class="container mt-4">
-    <h1 class="mb-4">🗃 {{ shop.name }} – Inventory</h1>
-
-    <Link :href="`/admin/shops/${shop.id}/products/create`" class="btn btn-primary mb-3">
-      ➕ Add New Product
-    </Link>
+    <h2>Inventory - {{ shop.name }}</h2>
+    <a :href="`/admin/shops/${shop.id}/inventory/create`" class="btn btn-primary my-3">Add Product</a>
 
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Stock</th>
-          <th>Unit</th>
-          <th>Actions</th>
+          <th>Name</th><th>Price</th><th>Stock</th><th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="product in products" :key="product.id">
           <td>{{ product.name }}</td>
-          <td>₱{{ product.price.toFixed(2) }}</td>
-          <td>{{ product.stock_quantity }}</td>
-          <td>{{ product.unit }}</td>
+          <td>₱{{ product.price }}</td>
+          <td>{{ product.stock }}</td>
           <td>
-            <Link :href="`/admin/shops/${shop.id}/products/${product.id}/edit`" class="btn btn-sm btn-warning">✏️ Edit</Link>
-            <button @click="deleteProduct(product.id)" class="btn btn-sm btn-danger ms-2">🗑 Delete</button>
+            <a :href="`/admin/products/${product.id}/edit`" class="btn btn-sm btn-warning me-2">Edit</a>
+            <button class="btn btn-sm btn-danger" @click="deleteProduct(product.id)">Delete</button>
           </td>
         </tr>
       </tbody>
     </table>
-
-    <Link :href="`/admin/shops`" class="btn btn-secondary mt-3">← Back to Shops</Link>
   </div>
 </template>
 
 <script setup>
-import { Link, router } from '@inertiajs/vue3'
-defineProps({ shop: Object, products: Array })
+import { router } from '@inertiajs/vue3'
+defineProps({
+  shop: Object,
+  products: Array
+})
 
 function deleteProduct(id) {
-  if (confirm('Are you sure you want to delete this product?')) {
-    router.delete(`/admin/shops/${shop.id}/products/${id}`)
+  if (confirm('Are you sure?')) {
+    router.delete(`/admin/products/${id}`)
   }
 }
 </script>
