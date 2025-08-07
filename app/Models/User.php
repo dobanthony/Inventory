@@ -43,8 +43,4 @@ class User extends Authenticatable
     {
         return $this->role === 'staff';
     }
-    public function shops()
-    {
-        return $this->hasMany(Shop::class, 'admin_id');
-    }
 }

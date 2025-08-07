@@ -1,10 +1,10 @@
 <template>
-  <DashboardLayout>
+  <AdminLayout>
     <h1>Admin</h1>
     <p>This uses a Vue layout with Inertia, responsive sidebar, and topbar.</p>
-  </DashboardLayout>
+  </AdminLayout>
 </template>
 
 <script setup>
-import DashboardLayout from '@/Layouts/DashboardLayout.vue'
+import AdminLayout from '@/Layouts/AdminLayout.vue';
 </script>
