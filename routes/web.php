@@ -36,4 +36,11 @@ Route::middleware('auth')->group(function () {
 });
 
 
+use App\Http\Controllers\Admin\ShopController;
+
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::resource('/shops', ShopController::class)->except('show');
+});
+
+
 require __DIR__.'/auth.php';

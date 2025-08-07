@@ -9,6 +9,14 @@
             <li class="nav-item">
                 <Link href="/dashboard" class="nav-link text-white text-decoration-none">Dashboard</Link>
             </li>
+            <li class="nav-item">
+            <Link class="nav-link" :href="route('shops.index')">Shop</Link>
+            </li>
+
+            <!-- Create Shop -->
+            <li class="nav-item">
+            <Link class="nav-link" :href="route('shops.create')">Add Shop</Link>
+            </li>
         </ul>
       <hr class="bg-secondary" />
     </nav>
