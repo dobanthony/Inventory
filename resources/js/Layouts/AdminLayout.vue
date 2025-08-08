@@ -2,23 +2,33 @@
   <div>
     <!-- Sidebar -->
     <nav id="sidebar" class="p-3 text-white" :class="{ show: sidebarOpen }">
-      <form class="mb-3">
-        <input type="text" class="form-control form-control-sm" placeholder="Search..." />
-      </form>
+        <form class="mb-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Search..." />
+        </form>
         <ul class="nav flex-column mb-3">
             <li class="nav-item">
                 <Link href="/dashboard" class="nav-link text-white text-decoration-none">Dashboard</Link>
             </li>
+
+            <!-- Shops -->
             <li class="nav-item">
-            <Link class="nav-link" :href="route('shops.index')">Shop</Link>
+                <Link class="nav-link text-white text-decoration-none" :href="route('shops.index')">Shop</Link>
             </li>
 
-            <!-- Create Shop -->
             <li class="nav-item">
-            <Link class="nav-link" :href="route('shops.create')">Add Shop</Link>
+                <Link class="nav-link text-white text-decoration-none" :href="route('shops.create')">Add Shop</Link>
+            </li>
+
+            <!-- Products -->
+            <li class="nav-item">
+                <Link class="nav-link text-white text-decoration-none" :href="route('admin.products.index')">Products</Link>
+            </li>
+
+            <li class="nav-item">
+                <Link class="nav-link text-white text-decoration-none" :href="route('admin.products.create')">Add Product</Link>
             </li>
         </ul>
-      <hr class="bg-secondary" />
+        <hr class="bg-secondary" />
     </nav>
 
     <!-- Desktop Toggle Buttons -->
