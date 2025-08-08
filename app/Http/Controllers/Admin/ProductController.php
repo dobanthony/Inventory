@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Order;
 use App\Models\Sale;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -88,27 +89,61 @@ class ProductController extends Controller
         ]);
     }
 
+    // public function buyStore(Request $request, Product $product)
+    // {
+    //     $request->validate([
+    //         'quantity' => 'required|integer|min:1',
+    //     ]);
+
+    //     if ($request->quantity > $product->stock) {
+    //         return back()->withErrors(['quantity' => 'Not enough stock available.']);
+    //     }
+
+    //     // Reduce stock
+    //     $product->stock -= $request->quantity;
+    //     $product->save();
+
+    //     // Record sale
+    //     Sale::create([
+    //         'product_id' => $product->id,
+    //         'quantity'   => $request->quantity,
+    //         'total'      => $product->price * $request->quantity,
+    //     ]);
+
+    //     return redirect()->route('products.index')->with('success', 'Purchase recorded successfully.');
+    // }
+
+    public function buy(Product $product)
+    {
+        return inertia('Admin/Inventory/Buy', [
+            'product' => $product
+        ]);
+    }
+
+    // Store purchase
     public function buyStore(Request $request, Product $product)
     {
-        $request->validate([
-            'quantity' => 'required|integer|min:1',
+        $data = $request->validate([
+            'quantity' => 'required|integer|min:1'
         ]);
 
-        if ($request->quantity > $product->stock) {
+        if ($data['quantity'] > $product->stock) {
             return back()->withErrors(['quantity' => 'Not enough stock available.']);
         }
 
-        // Reduce stock
-        $product->stock -= $request->quantity;
-        $product->save();
+        $total = $product->price * $data['quantity'];
 
-        // Record sale
-        Sale::create([
+        // Store order
+        Order::create([
             'product_id' => $product->id,
-            'quantity'   => $request->quantity,
-            'total'      => $product->price * $request->quantity,
+            'quantity'   => $data['quantity'],
+            'price'      => $product->price,
+            'total'      => $total
         ]);
 
-        return redirect()->route('products.index')->with('success', 'Purchase recorded successfully.');
+        // Reduce stock
+        $product->decrement('stock', $data['quantity']);
+
+        return redirect()->route('orders.index')->with('success', 'Product purchased successfully!');
     }
 }

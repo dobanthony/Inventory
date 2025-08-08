@@ -27,6 +27,10 @@
             <li class="nav-item">
                 <Link class="nav-link text-white text-decoration-none" :href="route('products.create')">Add Product</Link>
             </li>
+
+            <li class="nav-item">
+                <Link :href="route('orders.index')" class="nav-link">Orders</Link>
+            </li>
         </ul>
         <hr class="bg-secondary" />
     </nav>

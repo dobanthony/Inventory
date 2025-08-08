@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\ProfileController;
@@ -59,9 +60,21 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/products/{product}/buy', [ProductController::class, 'buyForm'])->name('products.buy');
     Route::post('/products/{product}/buy', [ProductController::class, 'buyStore'])->name('products.buy.store');
 
+    Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
+
+    // Product buy
+    Route::get('/products/{product}/buy', [ProductController::class, 'buy'])->name('products.buy');
+    Route::post('/products/{product}/buy', [ProductController::class, 'buyStore'])->name('products.buy.store');
 });
 
+use App\Http\Controllers\Admin\ProductBuyController;
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/products/{product}/buy', [ProductBuyController::class, 'create'])
+        ->name('products.buy');
+    Route::post('/products/{product}/buy', [ProductBuyController::class, 'store'])
+        ->name('products.buy.store');
+});
 
 
 require __DIR__.'/auth.php';
