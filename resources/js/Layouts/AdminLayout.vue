@@ -21,11 +21,11 @@
 
             <!-- Products -->
             <li class="nav-item">
-                <Link class="nav-link text-white text-decoration-none" :href="route('admin.products.index')">Products</Link>
+                <Link class="nav-link text-white text-decoration-none" :href="route('products.index')">Products</Link>
             </li>
 
             <li class="nav-item">
-                <Link class="nav-link text-white text-decoration-none" :href="route('admin.products.create')">Add Product</Link>
+                <Link class="nav-link text-white text-decoration-none" :href="route('products.create')">Add Product</Link>
             </li>
         </ul>
         <hr class="bg-secondary" />

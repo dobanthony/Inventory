@@ -26,6 +26,9 @@
                         <Link class="btn btn-primary btn-sm" :href="route('products.edit', product.id)">Edit</Link>
                         <Link class="btn btn-info btn-sm ms-2" :href="route('products.show', product.id)">View</Link>
                         <button @click="deleteProduct(product.id)" class="btn btn-danger btn-sm ms-2">Delete</button>
+                        <Link :href="route('products.buy', product.id)" class="btn btn-sm btn-success me-2">
+                            Buy
+                        </Link>
                     </td>
                 </tr>
             </tbody>

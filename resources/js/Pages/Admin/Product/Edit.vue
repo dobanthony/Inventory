@@ -14,7 +14,7 @@ const form = useForm({
 });
 
 function updateProduct() {
-    form.put(route('admin.products.update', product.id));
+    form.put(route('products.update', product.id));
 }
 </script>
 

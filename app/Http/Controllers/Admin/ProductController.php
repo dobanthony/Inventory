@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Sale;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Shop;
@@ -78,5 +79,36 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Product deleted.');
+    }
+
+    public function buyForm(Product $product)
+    {
+        return Inertia::render('Admin/Inventory/Buy', [
+            'product' => $product
+        ]);
+    }
+
+    public function buyStore(Request $request, Product $product)
+    {
+        $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        if ($request->quantity > $product->stock) {
+            return back()->withErrors(['quantity' => 'Not enough stock available.']);
+        }
+
+        // Reduce stock
+        $product->stock -= $request->quantity;
+        $product->save();
+
+        // Record sale
+        Sale::create([
+            'product_id' => $product->id,
+            'quantity'   => $request->quantity,
+            'total'      => $product->price * $request->quantity,
+        ]);
+
+        return redirect()->route('products.index')->with('success', 'Purchase recorded successfully.');
     }
 }
